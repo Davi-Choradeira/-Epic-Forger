@@ -1,6 +1,123 @@
 body {
   margin: 0;
-  font-family: 'Segoe UI', sans-serif;
+  font-family: 'Press Start 2P', monospace;
   background-color: #1e1e2f;
   color: #f4f4f4;
+  text-align: center;
+}
+
+button {
+  font-family: 'Press Start 2P', monospace;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+}
+
+h1, h2, p {
+  font-family: 'Press Start 2P', monospace;
+}
+.card-effect {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.15;
+}
+
+.magic-effect {
+  background: radial-gradient(circle at center, #fff 0%, transparent 70%);
+  animation: sparkle 2s infinite;
+}
+
+@keyframes sparkle {
+  0%, 100% { transform: scale(1); opacity: 0.2; }
+  50% { transform: scale(1.2); opacity: 0.4; }
+}
+
+.fire-effect {
+  background: repeating-linear-gradient(45deg, #ff6f00 0px, #ff3366 20px);
+  animation: flames 2s infinite;
+}
+
+@keyframes flames {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+  100% { transform: translateY(0); }
+}
+
+.wind-effect {
+  background: linear-gradient(90deg, #3f88c5 0%, transparent 100%);
+  animation: breeze 3s infinite linear;
+}
+
+@keyframes breeze {
+  0% { background-position: 0 0; }
+  100% { background-position: 300px 0; }
+}
+
+.guard-effect {
+  background: radial-gradient(circle at center, #43a047 0%, transparent 80%);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); opacity: 0.2; }
+  50% { transform: scale(1.1); opacity: 0.4; }
+  100% { transform: scale(1); opacity: 0.2; }
+}
+
+/* === Fundos mágicos por classe === */
+
+.background-effect {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.1;
+}
+
+.mago {
+  background: radial-gradient(circle, #ffffff 1px, transparent 2px);
+  background-size: 12px 12px;
+  animation: sparkle 3s infinite linear;
+}
+
+@keyframes sparkle {
+  0% { background-position: 0 0; }
+  100% { background-position: 200px 200px; }
+}
+
+.guerreiro {
+  background: repeating-linear-gradient(45deg, #ff6f00 0px, #ff3366 20px);
+  animation: flames 2s infinite alternate;
+}
+
+@keyframes flames {
+  0% { opacity: 0.1; }
+  100% { opacity: 0.2; }
+}
+
+.arqueiro {
+  background: linear-gradient(90deg, #3f88c5 0%, transparent 100%);
+  animation: breeze 4s infinite linear;
+}
+
+@keyframes breeze {
+  0% { background-position: -300px 0; }
+  100% { background-position: 300px 0; }
+}
+
+.guardiao {
+  background: radial-gradient(circle at center, #43a047 0%, transparent 80%);
+  animation: pulse 3s infinite ease-in-out;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 0.1; }
+  50% { transform: scale(1.05); opacity: 0.25; }
 }
