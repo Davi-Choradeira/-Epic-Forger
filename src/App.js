@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import CharacterCard from './CharacterCard';
+import StatusBar from './StatusBar';
 import './index.css';
+import backgroundImage from './assets/images/montanhas-epicas.png';
+import heroBanner from './assets/images/Persona.png'; // Banner dos 4 personagens
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -10,28 +13,30 @@ function App() {
   const [history, setHistory] = useState([]);
 
   const classOptions = {
-    'Mago': {
-      icon: '🧙',
-      powers: ['Luz', 'Sombras', 'Tempo', 'Fogo', 'Espírito'],
-    },
-    'Guerreiro': {
-      icon: '⚔️',
-      powers: ['Metal', 'Relâmpago', 'Fogo', 'Força', 'Explosão'],
-    },
-    'Arqueiro': {
-      icon: '🏹',
-      powers: ['Vento', 'Gelo', 'Cristais', 'Água', 'Precisão'],
-    },
-    'Guardião': {
-      icon: '🛡️',
-      powers: ['Energia', 'Pedra', 'Escudo', 'Raiz', 'Reflexo'],
-    },
+    Mago: { icon: '🧙', powers: ['Luz', 'Sombras', 'Tempo', 'Fogo', 'Espírito'] },
+    Guerreiro: { icon: '⚔️', powers: ['Metal', 'Relâmpago', 'Fogo', 'Força', 'Explosão'] },
+    Arqueiro: { icon: '🏹', powers: ['Vento', 'Gelo', 'Cristais', 'Água', 'Precisão'] },
+    Guardião: { icon: '🛡️', powers: ['Energia', 'Pedra', 'Escudo', 'Raiz', 'Reflexo'] },
   };
 
   const weaknesses = ['Silêncio', 'Tempo', 'Caos', 'Dúvida', 'Chamas', 'Sombra'];
   const colors = ['#d6336c', '#3f88c5', '#7c4dff', '#ff6f00', '#43a047', '#6d4c41'];
-  const regions = ['vulcão eterno', 'floresta das brumas', 'abismo cristalino', 'templo do eco', 'montanha espectral', 'mar dos sonhos perdidos'];
-  const titles = ['guardião ancestral', 'filho das tempestades', 'mestra dos portais', 'viajante planar', 'caçador de relâmpagos', 'discípulo do tempo'];
+  const regions = [
+    'vulcão eterno',
+    'floresta das brumas',
+    'abismo cristalino',
+    'templo do eco',
+    'montanha espectral',
+    'mar dos sonhos perdidos',
+  ];
+  const titles = [
+    'guardião ancestral',
+    'filho das tempestades',
+    'mestra dos portais',
+    'viajante planar',
+    'caçador de relâmpagos',
+    'discípulo do tempo',
+  ];
 
   function handleLogin() {
     if (username.trim() && selectedClass) {
@@ -56,11 +61,38 @@ function App() {
 
   return (
     <>
+      {/* Fundo visual com montanhas épicas */}
+      <div
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          backgroundImage: `url(${backgroundImage})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center bottom',
+          opacity: 0.12,
+          zIndex: 0,
+          pointerEvents: 'none',
+        }}
+      />
+
+      {/* Efeito por classe */}
       <div className={`background-effect ${selectedClass?.toLowerCase()}`} />
+
+      {loggedIn && (
+        <StatusBar
+          username={username}
+          selectedClass={selectedClass}
+          forgeCount={history.length + (character ? 1 : 0)}
+        />
+      )}
+
       <div
         style={{
           textAlign: 'center',
-          paddingTop: '40px',
+          paddingTop: loggedIn ? '60px' : '40px',
           fontFamily: "'Press Start 2P', monospace",
           color: '#fff',
           position: 'relative',
@@ -68,65 +100,46 @@ function App() {
         }}
       >
         {!loggedIn ? (
-          <div>
-            <h1 style={{ fontSize: '22px' }}>🧙‍♂️ Bem-vindo à Epic Forger</h1>
+          <div className="login-container">
+            <h1 className="title-entry">🧙‍♂️ Epic Forger</h1>
             <p>Digite seu nome místico</p>
             <input
               type="text"
               placeholder="Seu nome"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              style={{
-                padding: '10px',
-                fontFamily: "'Press Start 2P', monospace",
-                width: '220px',
-                border: '2px solid #fff',
-                backgroundColor: '#1e1e2f',
-                color: '#f4f4f4',
-                marginBottom: '12px',
-              }}
+              className="input-pixel"
             />
             <p>Escolha sua classe:</p>
-            {Object.keys(classOptions).map((cls) => (
-              <button
-                key={cls}
-                onClick={() => setSelectedClass(cls)}
-                style={{
-                  padding: '10px 14px',
-                  margin: '6px',
-                  backgroundColor: selectedClass === cls ? '#ff3366' : '#333',
-                  color: '#fff',
-                  border: '2px solid #fff',
-                  borderRadius: '6px',
-                  fontFamily: "'Press Start 2P', monospace",
-                  cursor: 'pointer',
-                }}
-              >
-                {classOptions[cls].icon} {cls}
-              </button>
-            ))}
-            <br />
-            <button
-              onClick={handleLogin}
-              style={{
-                padding: '12px 24px',
-                fontSize: '12px',
-                backgroundColor: '#0f0',
-                color: '#000',
-                border: '2px solid #fff',
-                borderRadius: '4px',
-                cursor: 'pointer',
-                marginTop: '12px',
-              }}
-            >
+            <div className="class-selection">
+              {Object.keys(classOptions).map((cls) => (
+                <button
+                  key={cls}
+                  onClick={() => setSelectedClass(cls)}
+                  className={`class-btn ${selectedClass === cls ? 'selected' : ''}`}
+                >
+                  {classOptions[cls].icon} {cls}
+                </button>
+              ))}
+            </div>
+            <button onClick={handleLogin} className="enter-btn">
               Entrar na Forja
             </button>
+
+            {/* Banner com os quatro heróis */}
+            <div className="gallery-epic">
+              <img src={heroBanner} alt="Heróis Épicos" className="persona-banner" />
+            </div>
+            <p style={{ fontSize: '12px', color: '#ccc', marginTop: '8px' }}>
+              Quatro forças… um só destino. Escolha a sua.
+            </p>
           </div>
         ) : (
           <>
             <h1 style={{ fontSize: '28px' }}>⚔️ Epic Forger</h1>
             <p>
-              Bem-vindo, <strong>{username}</strong>! Classe escolhida: <strong>{selectedClass}</strong>
+              Bem-vindo, <strong>{username}</strong>! Classe escolhida:{' '}
+              <strong>{selectedClass}</strong>
             </p>
             <button
               onClick={forgeCharacter}
@@ -146,11 +159,17 @@ function App() {
 
             {character && (
               <>
-                <CharacterCard {...character} />
-                <h2 style={{ marginTop: '30px', fontSize: '14px' }}>📜 Histórico de Criações</h2>
-                {history.map((c, index) => (
-                  <CharacterCard key={index} {...c} />
-                ))}
+                <h2 style={{ fontSize: '16px', marginTop: '24px' }}>🧙‍♂️ Personagem Atual</h2>
+                <div className="card-grid">
+                  <CharacterCard {...character} />
+                </div>
+
+                <h2 style={{ fontSize: '14px', marginTop: '32px' }}>📜 Histórico de Criações</h2>
+                <div className="card-grid">
+                  {history.map((c, index) => (
+                    <CharacterCard key={index} {...c} />
+                  ))}
+                </div>
               </>
             )}
           </>

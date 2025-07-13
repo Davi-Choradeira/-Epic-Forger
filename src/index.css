@@ -1,3 +1,4 @@
+/* === Reset base === */
 body {
   margin: 0;
   font-family: 'Press Start 2P', monospace;
@@ -6,70 +7,91 @@ body {
   text-align: center;
 }
 
+h1, h2, p {
+  font-family: 'Press Start 2P', monospace;
+}
+
 button {
   font-family: 'Press Start 2P', monospace;
   letter-spacing: 1px;
   transition: all 0.3s ease;
 }
 
-h1, h2, p {
+/* === Tela de Entrada Retrô === */
+.login-container {
+  max-width: 400px;
+  margin: auto;
+  border: 4px solid #fff;
+  padding: 24px;
+  background-color: #2c2c3a;
+  box-shadow: 0 0 12px #000;
+  border-radius: 8px;
+  animation: fadeIn 1.2s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.title-entry {
+  font-size: 24px;
+  color: gold;
+  text-shadow: 2px 2px #000;
+  margin-bottom: 16px;
+}
+
+.input-pixel {
   font-family: 'Press Start 2P', monospace;
-}
-.card-effect {
-  position: absolute;
-  top: 0;
-  left: 0;
+  padding: 10px;
   width: 100%;
-  height: 100%;
-  z-index: 0;
-  pointer-events: none;
-  opacity: 0.15;
+  margin-bottom: 12px;
+  background-color: #1e1e2f;
+  border: 2px solid #fff;
+  color: #f4f4f4;
 }
 
-.magic-effect {
-  background: radial-gradient(circle at center, #fff 0%, transparent 70%);
-  animation: sparkle 2s infinite;
+.class-selection {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 14px;
 }
 
-@keyframes sparkle {
-  0%, 100% { transform: scale(1); opacity: 0.2; }
-  50% { transform: scale(1.2); opacity: 0.4; }
+.class-btn {
+  padding: 8px 12px;
+  border: 2px solid #fff;
+  background-color: #444;
+  color: #fff;
+  cursor: pointer;
+  font-size: 12px;
+  font-family: 'Press Start 2P', monospace;
+  transition: all 0.3s ease;
 }
 
-.fire-effect {
-  background: repeating-linear-gradient(45deg, #ff6f00 0px, #ff3366 20px);
-  animation: flames 2s infinite;
+.class-btn.selected {
+  background-color: #ff3366;
 }
 
-@keyframes flames {
-  0% { transform: translateY(0); }
-  50% { transform: translateY(-5px); }
-  100% { transform: translateY(0); }
+.enter-btn {
+  padding: 12px 24px;
+  font-size: 12px;
+  background: linear-gradient(90deg, #ff3366, #ff6f00);
+  border: 2px solid #fff;
+  color: #fff;
+  cursor: pointer;
+  font-family: 'Press Start 2P', monospace;
+  animation: pulsePortal 1.5s infinite;
 }
 
-.wind-effect {
-  background: linear-gradient(90deg, #3f88c5 0%, transparent 100%);
-  animation: breeze 3s infinite linear;
+@keyframes pulsePortal {
+  0% { transform: scale(1); opacity: 0.9; }
+  50% { transform: scale(1.05); opacity: 1; }
+  100% { transform: scale(1); opacity: 0.9; }
 }
 
-@keyframes breeze {
-  0% { background-position: 0 0; }
-  100% { background-position: 300px 0; }
-}
-
-.guard-effect {
-  background: radial-gradient(circle at center, #43a047 0%, transparent 80%);
-  animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-  0% { transform: scale(1); opacity: 0.2; }
-  50% { transform: scale(1.1); opacity: 0.4; }
-  100% { transform: scale(1); opacity: 0.2; }
-}
-
-/* === Fundos mágicos por classe === */
-
+/* === Camada de fundo por classe selecionada === */
 .background-effect {
   position: fixed;
   top: 0;
@@ -78,46 +100,219 @@ h1, h2, p {
   height: 100%;
   z-index: 0;
   pointer-events: none;
-  opacity: 0.1;
+  transition: background-color 0.5s ease-in-out;
 }
 
-.mago {
-  background: radial-gradient(circle, #ffffff 1px, transparent 2px);
-  background-size: 12px 12px;
-  animation: sparkle 3s infinite linear;
+/* Cores suaves inspiradas nos personagens */
+.background-effect.mago {
+  background-color: rgba(124, 77, 255, 0.25);   /* Roxo do mago */
 }
 
-@keyframes sparkle {
-  0% { background-position: 0 0; }
-  100% { background-position: 200px 200px; }
+.background-effect.guerreiro {
+  background-color: rgba(255, 51, 102, 0.25);   /* Vermelho do guerreiro */
 }
 
-.guerreiro {
-  background: repeating-linear-gradient(45deg, #ff6f00 0px, #ff3366 20px);
-  animation: flames 2s infinite alternate;
+.background-effect.arqueiro {
+  background-color: rgba(63, 136, 197, 0.25);   /* Azul do arqueiro */
 }
 
-@keyframes flames {
+.background-effect.guardiao {
+  background-color: rgba(67, 160, 71, 0.25);    /* Verde do guardião */
+}
+/* === Aura mágica nos cards === */
+.card-base {
+  position: relative;
+  z-index: 1;
+}
+
+.card-bg-effect {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.15;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.card-mago .card-bg-effect {
+  background: radial-gradient(circle at center, #fff 5%, transparent 80%);
+  animation: swirlMagic 3s infinite ease-in-out;
+}
+
+@keyframes swirlMagic {
+  0% { transform: rotate(0deg) scale(1); }
+  50% { transform: rotate(10deg) scale(1.1); }
+  100% { transform: rotate(0deg) scale(1); }
+}
+
+.card-guerreiro .card-bg-effect {
+  background: linear-gradient(45deg, #ff6f00, #ff3366);
+  animation: sparkFire 2s infinite alternate;
+}
+
+@keyframes sparkFire {
   0% { opacity: 0.1; }
-  100% { opacity: 0.2; }
+  100% { opacity: 0.25; }
 }
 
-.arqueiro {
+.card-arqueiro .card-bg-effect {
   background: linear-gradient(90deg, #3f88c5 0%, transparent 100%);
-  animation: breeze 4s infinite linear;
+  animation: windFlow 4s infinite linear;
 }
 
-@keyframes breeze {
-  0% { background-position: -300px 0; }
-  100% { background-position: 300px 0; }
+@keyframes windFlow {
+  0% { background-position: -200px 0; }
+  100% { background-position: 200px 0; }
 }
 
-.guardiao {
-  background: radial-gradient(circle at center, #43a047 0%, transparent 80%);
-  animation: pulse 3s infinite ease-in-out;
+.card-guardiao .card-bg-effect {
+  background: radial-gradient(circle, #43a047 20%, transparent 80%);
+  animation: runeGlow 3s infinite ease;
 }
 
-@keyframes pulse {
-  0%, 100% { transform: scale(1); opacity: 0.1; }
-  50% { transform: scale(1.05); opacity: 0.25; }
+@keyframes runeGlow {
+  0% { transform: scale(1); opacity: 0.1; }
+  50% { transform: scale(1.05); opacity: 0.2; }
+  100% { transform: scale(1); opacity: 0.1; }
+}
+
+/* === Grade dos Cards === */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  justify-content: center;
+  margin-top: 12px;
+  padding: 0 16px;
+}
+
+/* === Barra de Status === */
+.status-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #222;
+  border-bottom: 3px solid #fff;
+  color: #f4f4f4;
+  font-size: 10px;
+  padding: 6px 12px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  z-index: 999;
+  box-shadow: 0 0 8px #000;
+  font-family: 'Press Start 2P', monospace;
+}
+
+.status-bar span {
+  display: inline-block;
+  padding: 2px 4px;
+}
+
+/* === Efeitos mágicos por poder === */
+.card-power-fogo .card-bg-effect {
+  background: linear-gradient(45deg, #ff6f00, #ff3366);
+  animation: fireAura 2s infinite alternate;
+}
+
+@keyframes fireAura {
+  0% { opacity: 0.1; transform: scale(1); }
+  50% { opacity: 0.25; transform: scale(1.05); }
+  100% { opacity: 0.1; transform: scale(1); }
+}
+
+.card-power-gelo .card-bg-effect {
+  background: radial-gradient(circle, #bbdefb 10%, transparent 80%);
+  animation: icePulse 3s infinite ease-in-out;
+}
+
+@keyframes icePulse {
+  0% { opacity: 0.1; }
+  50% { opacity: 0.3; }
+  100% { opacity: 0.1; }
+}
+
+.card-power-sombras .card-bg-effect {
+  background: radial-gradient(circle, #000 10%, transparent 80%);
+  animation: shadowFloat 3s infinite ease-in-out;
+}
+
+@keyframes shadowFloat {
+  0% { transform: translateY(0); opacity: 0.1; }
+  50% { transform: translateY(-4px); opacity: 0.3; }
+  100% { transform: translateY(0); opacity: 0.1; }
+}
+
+.card-power-tempo .card-bg-effect {
+  background: repeating-conic-gradient(#ffd54f 0deg 10deg, transparent 10deg 20deg);
+  animation: timeSpin 6s linear infinite;
+}
+
+@keyframes timeSpin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.card-power-vento .card-bg-effect {
+  background: linear-gradient(90deg, #81d4fa, transparent);
+  background-size: 200% 100%;
+  animation: windWave 5s infinite linear;
+}
+
+@keyframes windWave {
+  0% { background-position: -200px 0; }
+  100% { background-position: 200px 0; }
+}
+
+.card-power-cristais .card-bg-effect {
+  background: radial-gradient(circle, #a5d6a7 20%, transparent 80%);
+  animation: crystalBlink 3s infinite;
+}
+
+@keyframes crystalBlink {
+  0% { opacity: 0.1; transform: scale(1); }
+  50% { opacity: 0.3; transform: scale(1.05); }
+  100% { opacity: 0.1; transform: scale(1); }
+}
+
+/* === Fundo com Montanhas Épicas === */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('./assets/images/montanhas-epicas.png');
+  background-size: cover;
+  background-position: center bottom;
+  opacity: 0.12;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* === Banner dos Quatro Heróis === */
+.gallery-epic {
+  display: flex;
+  justify-content: center;
+  margin-top: 24px;
+}
+
+.persona-banner {
+  width: 250px;
+  max-width: 95vw;
+  height: auto;
+  border-radius: 12px;
+  border: 2px solid #fff;
+  box-shadow: 0 0 16px #ff3366;
+  background-color: #1d1d2b;
+  animation: pulseGlow 6s infinite ease-in-out;
+}
+
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 16px #ff3366; }
+  50% { box-shadow: 0 0 24px #ff0066; }
 }
